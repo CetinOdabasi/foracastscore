@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MaçAI — Yapay Zekâ Maç Tahminleri ve Canlı Skorlar</title>
+    <meta
+      name="description"
+      content="Spor maç tahminleri, yapay zekâ modellerinin karşılaştırması ve canlı skor takibi. Futbol ve daha fazlası için tek panel."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-glow" aria-hidden="true"></div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="#">
+          <span class="logo-mark" aria-hidden="true"></span>
+          MaçAI
+        </a>
+        <button
+          type="button"
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Menüyü aç"
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <nav id="site-nav" class="nav" aria-label="Ana menü">
+          <a href="#canli">Canlı skorlar</a>
+          <a href="#tahminler">Tahminler</a>
+          <a href="#karsilastirma">AI karşılaştırma</a>
+          <a href="#ozellikler">Özellikler</a>
+          <a href="#bulten" class="nav-cta">Bültene katıl</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">
+              <span class="live-dot" aria-hidden="true"></span>
+              Canlı veri + çoklu model
+            </p>
+            <h1>
+              Maç tahminlerini
+              <span class="gradient-text">yapay zekâyla</span>
+              karşılaştır
+            </h1>
+            <p class="lead">
+              Bugünün ve haftanın maçlarında farklı AI motorlarının 1-X-2, gol ve
+              handikap eğilimlerini yan yana gör. Canlı skorları takip et, tahmin
+              kartlarını lig veya takım adına göre süz.
+            </p>
+            <div class="hero-actions">
+              <a href="#tahminler" class="btn btn-primary">Tahminlere git</a>
+              <a href="#canli" class="btn btn-ghost">Canlı maçlar</a>
+            </div>
+            <ul class="hero-badges" role="list">
+              <li>Çoklu model skoru</li>
+              <li>Otomatik güncellenen oran görünümü</li>
+              <li>Takım / lig araması</li>
+            </ul>
+          </div>
+          <div class="hero-card" aria-label="Örnek tahmin özeti">
+            <div class="hero-card-head">
+              <span class="league-pill">Süper Lig</span>
+              <span class="kickoff">Bugün · 20:00</span>
+            </div>
+            <div class="hero-match">
+              <div class="team">
+                <span class="team-abbr">GS</span>
+                <span class="team-name">Galatasaray</span>
+              </div>
+              <div class="vs-block">
+                <span class="vs">VS</span>
+                <span class="consensus">Konsensüs: ev sahibi</span>
+              </div>
+              <div class="team team-away">
+                <span class="team-abbr">FB</span>
+                <span class="team-name">Fenerbahçe</span>
+              </div>
+            </div>
+            <div class="prob-bars">
+              <div class="prob-row">
+                <span>1</span>
+                <div class="prob-track"><i style="width: 46%"></i></div>
+                <span>%46</span>
+              </div>
+              <div class="prob-row">
+                <span>X</span>
+                <div class="prob-track"><i class="draw" style="width: 28%"></i></div>
+                <span>%28</span>
+              </div>
+              <div class="prob-row">
+                <span>2</span>
+                <div class="prob-track"><i class="away" style="width: 26%"></i></div>
+                <span>%26</span>
+              </div>
+            </div>
+            <p class="hero-card-note">Örnek arayüz — gerçek API bağlantısı eklenebilir.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="canli" class="section section-tight">
+        <div class="container">
+          <header class="section-head section-head-row">
+            <div>
+              <p class="eyebrow">Canlı</p>
+              <h2>Maç sonuçları — anlık panel</h2>
+            </div>
+            <p class="live-meta">
+              Son yenileme: <time id="live-refresh" datetime="">—</time>
+              <span class="badge-live">demo veri</span>
+            </p>
+          </header>
+          <div class="live-scroller" role="region" aria-label="Canlı skorlar">
+            <article class="live-card live">
+              <p class="live-league">Premier League</p>
+              <p class="live-teams">Arsenal — Chelsea</p>
+              <p class="live-score"><strong>2</strong> <span class="sep">:</span> <strong>1</strong></p>
+              <p class="live-min">67′</p>
+            </article>
+            <article class="live-card live">
+              <p class="live-league">La Liga</p>
+              <p class="live-teams">Real Madrid — Sevilla</p>
+              <p class="live-score"><strong>1</strong> <span class="sep">:</span> <strong>0</strong></p>
+              <p class="live-min">23′</p>
+            </article>
+            <article class="live-card">
+              <p class="live-league">Süper Lig</p>
+              <p class="live-teams">Trabzonspor — Beşiktaş</p>
+              <p class="live-score"><strong>1</strong> <span class="sep">:</span> <strong>1</strong></p>
+              <p class="live-min">İY</p>
+            </article>
+            <article class="live-card">
+              <p class="live-league">Serie A</p>
+              <p class="live-teams">Inter — Napoli</p>
+              <p class="live-score"><strong>0</strong> <span class="sep">:</span> <strong>0</strong></p>
+              <p class="live-min">Yakında</p>
+            </article>
+            <article class="live-card live">
+              <p class="live-league">Bundesliga</p>
+              <p class="live-teams">Bayern — Leipzig</p>
+              <p class="live-score"><strong>3</strong> <span class="sep">:</span> <strong>2</strong></p>
+              <p class="live-min">81′</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="tahminler" class="section">
+        <div class="container">
+          <header class="section-head">
+            <p class="eyebrow">Tahminler</p>
+            <h2>Maç tahminlerini bul ve filtrele</h2>
+            <p class="section-lead">
+              Lig, takım veya anahtar kelime yaz; kartlar anında süzülür. Her satırda
+              farklı AI motorlarının eğilimi özetlenir.
+            </p>
+          </header>
+          <div class="toolbar">
+            <label class="search-wrap">
+              <span class="sr-only">Ara</span>
+              <input
+                type="search"
+                id="prediction-search"
+                class="search-input"
+                placeholder="Takım, lig ara… (ör. Galatasaray, Premier)"
+                autocomplete="off"
+              />
+            </label>
+            <div class="filter-chips" role="group" aria-label="Lig filtresi">
+              <button type="button" class="chip-btn is-active" data-filter="all">Tümü</button>
+              <button type="button" class="chip-btn" data-filter="Süper Lig">Süper Lig</button>
+              <button type="button" class="chip-btn" data-filter="Premier League">Premier</button>
+              <button type="button" class="chip-btn" data-filter="La Liga">La Liga</button>
+              <button type="button" class="chip-btn" data-filter="Champions League">UCL</button>
+            </div>
+          </div>
+          <p class="filter-empty hidden" id="filter-empty" role="status">
+            Eşleşen maç yok. Farklı bir arama veya lig deneyin.
+          </p>
+          <div class="prediction-grid" id="prediction-grid">
+            <article
+              class="pred-card"
+              data-league="Süper Lig"
+              data-teams="galatasaray fenerbahçe gs fb derbi"
+            >
+              <header class="pred-head">
+                <span class="league-tag">Süper Lig</span>
+                <time datetime="2026-04-01T20:00">Çar 20:00</time>
+              </header>
+              <h3 class="pred-match">Galatasaray — Fenerbahçe</h3>
+              <div class="pred-models">
+                <div class="model-pick">
+                  <span class="model-name">NeuralKick</span>
+                  <span class="pick home">1 · %46</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">StatMind</span>
+                  <span class="pick home">1 · %44</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">OddsGPT</span>
+                  <span class="pick draw">X · %29</span>
+                </div>
+              </div>
+              <p class="pred-foot">2.5 üst eğilim: yüksek · KG var: orta</p>
+            </article>
+            <article
+              class="pred-card"
+              data-league="Premier League"
+              data-teams="manchester city liverpool mc lfc"
+            >
+              <header class="pred-head">
+                <span class="league-tag">Premier League</span>
+                <time datetime="2026-04-02T19:30">Per 19:30</time>
+              </header>
+              <h3 class="pred-match">Manchester City — Liverpool</h3>
+              <div class="pred-models">
+                <div class="model-pick">
+                  <span class="model-name">NeuralKick</span>
+                  <span class="pick home">1 · %41</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">StatMind</span>
+                  <span class="pick away">2 · %38</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">OddsGPT</span>
+                  <span class="pick home">1 · %39</span>
+                </div>
+              </div>
+              <p class="pred-foot">xG farkı düşük · beraberlik riski yüksek</p>
+            </article>
+            <article
+              class="pred-card"
+              data-league="La Liga"
+              data-teams="barcelona atletico barça atm"
+            >
+              <header class="pred-head">
+                <span class="league-tag">La Liga</span>
+                <time datetime="2026-04-03T22:00">Cum 22:00</time>
+              </header>
+              <h3 class="pred-match">Barcelona — Atlético Madrid</h3>
+              <div class="pred-models">
+                <div class="model-pick">
+                  <span class="model-name">NeuralKick</span>
+                  <span class="pick home">1 · %52</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">StatMind</span>
+                  <span class="pick home">1 · %49</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">OddsGPT</span>
+                  <span class="pick draw">X · %27</span>
+                </div>
+              </div>
+              <p class="pred-foot">Ev baskısı + set piece avantajı</p>
+            </article>
+            <article
+              class="pred-card"
+              data-league="Champions League"
+              data-teams="real madrid arsenal ucl"
+            >
+              <header class="pred-head">
+                <span class="league-tag">Champions League</span>
+                <time datetime="2026-04-04T21:00">Cmt 21:00</time>
+              </header>
+              <h3 class="pred-match">Real Madrid — Arsenal</h3>
+              <div class="pred-models">
+                <div class="model-pick">
+                  <span class="model-name">NeuralKick</span>
+                  <span class="pick home">1 · %43</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">StatMind</span>
+                  <span class="pick away">2 · %35</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">OddsGPT</span>
+                  <span class="pick home">1 · %40</span>
+                </div>
+              </div>
+              <p class="pred-foot">Tempo yüksek · karşılıklı gol olasılığı</p>
+            </article>
+            <article
+              class="pred-card"
+              data-league="Süper Lig"
+              data-teams="beşiktaş trabzon bjk ts"
+            >
+              <header class="pred-head">
+                <span class="league-tag">Süper Lig</span>
+                <time datetime="2026-04-05T17:00">Paz 17:00</time>
+              </header>
+              <h3 class="pred-match">Beşiktaş — Trabzonspor</h3>
+              <div class="pred-models">
+                <div class="model-pick">
+                  <span class="model-name">NeuralKick</span>
+                  <span class="pick home">1 · %48</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">StatMind</span>
+                  <span class="pick draw">X · %31</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">OddsGPT</span>
+                  <span class="pick home">1 · %45</span>
+                </div>
+              </div>
+              <p class="pred-foot">Ev sahası + son form lehine</p>
+            </article>
+            <article
+              class="pred-card"
+              data-league="Premier League"
+              data-teams="tottenham manchester united spurs united"
+            >
+              <header class="pred-head">
+                <span class="league-tag">Premier League</span>
+                <time datetime="2026-04-06T16:30">Pzt 16:30</time>
+              </header>
+              <h3 class="pred-match">Tottenham — Manchester United</h3>
+              <div class="pred-models">
+                <div class="model-pick">
+                  <span class="model-name">NeuralKick</span>
+                  <span class="pick draw">X · %32</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">StatMind</span>
+                  <span class="pick away">2 · %41</span>
+                </div>
+                <div class="model-pick">
+                  <span class="model-name">OddsGPT</span>
+                  <span class="pick away">2 · %39</span>
+                </div>
+              </div>
+              <p class="pred-foot">Savunma açıkları · gollü maç senaryosu</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="karsilastirma" class="section section-alt">
+        <div class="container">
+          <header class="section-head">
+            <p class="eyebrow">Karşılaştırma</p>
+            <h2>AI modelleri yan yana</h2>
+            <p class="section-lead">
+              Aynı maç için üç farklı motorun 1-X-2 dağılımı. Çelişki varsa
+              riski sen belirlersin; biz sadece şeffaf gösteririz.
+            </p>
+          </header>
+          <div class="compare-board">
+            <div class="compare-match-title">
+              <span class="league-tag">Örnek maç</span>
+              <h3>Galatasaray — Fenerbahçe</h3>
+            </div>
+            <div class="compare-table-wrap">
+              <table class="compare-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Model</th>
+                    <th scope="col">1</th>
+                    <th scope="col">X</th>
+                    <th scope="col">2</th>
+                    <th scope="col">Öne çıkan</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>NeuralKick</td>
+                    <td><span class="cell-bar" style="--w: 46%"></span> %46</td>
+                    <td><span class="cell-bar draw" style="--w: 28%"></span> %28</td>
+                    <td><span class="cell-bar away" style="--w: 26%"></span> %26</td>
+                    <td><span class="tag-winner">Ev</span></td>
+                  </tr>
+                  <tr>
+                    <td>StatMind</td>
+                    <td><span class="cell-bar" style="--w: 44%"></span> %44</td>
+                    <td><span class="cell-bar draw" style="--w: 30%"></span> %30</td>
+                    <td><span class="cell-bar away" style="--w: 26%"></span> %26</td>
+                    <td><span class="tag-winner">Ev</span></td>
+                  </tr>
+                  <tr>
+                    <td>OddsGPT</td>
+                    <td><span class="cell-bar" style="--w: 38%"></span> %38</td>
+                    <td><span class="cell-bar draw" style="--w: 29%"></span> %29</td>
+                    <td><span class="cell-bar away" style="--w: 33%"></span> %33</td>
+                    <td><span class="tag-split">Dağınık</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="compare-note">
+              Yüzdeler örnek veridir. Üretimde model sürümü, veri kaynağı ve güncelleme
+              zamanı her satırda gösterilir.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="ozellikler" class="section">
+        <div class="container">
+          <header class="section-head">
+            <p class="eyebrow">Özellikler</p>
+            <h2>Senior seviye spor analiz deneyimi</h2>
+          </header>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">⚡</div>
+              <h3>Canlı skor akışı</h3>
+              <p>
+                Maç dakikası, devre ve sonuçları tek şeritte takip et. API
+                entegrasyonu ile gerçek zamanlıya geçiş hazır arayüz.
+              </p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">◇</div>
+              <h3>Çoklu AI konsensüsü</h3>
+              <p>
+                Farklı algoritmaların önerdiği sonuçları yan yana gör; aşırı
+                güven veya belirsizlik anında fark edilir.
+              </p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">◎</div>
+              <h3>Akıllı arama</h3>
+              <p>
+                Lig, kulüp veya anahtar kelimeyle tahmin havuzunu anında daralt.
+                Mobil ve masaüstünde aynı deneyim.
+              </p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">▣</div>
+              <h3>Rapor ve geçmiş</h3>
+              <p>
+                Model performansını geçmiş haftalara göre kıyasla (yol haritası).
+                Şeffaflık için skor kaynağı etiketleri.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="bulten" class="section cta-section">
+        <div class="container cta-box">
+          <div>
+            <h2>Haftalık tahmin özetini al</h2>
+            <p>
+              Önemli maçlar, model uyumsuzlukları ve canlı skor hatırlatmaları için
+              e-posta listesi — spam yok, tek özet.
+            </p>
+          </div>
+          <form class="cta-form" action="#" method="get">
+            <label class="sr-only" for="email">E-posta</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="ornek@posta.com"
+              autocomplete="email"
+            />
+            <button type="submit" class="btn btn-primary">Kaydol</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <span class="logo-mark sm" aria-hidden="true"></span>
+          <span>MaçAI</span>
+        </div>
+        <p class="footer-disclaimer">
+          Bu sayfa tanıtım ve arayüz demosudur. Tahminler yatırım veya bahis tavsiyesi
+          değildir; sonuçlar şansa bağlıdır. Gerçek veri için resmi spor API’leri ve
+          yasal çerçevenize uygun entegrasyon gerekir.
+        </p>
+        <nav class="footer-nav" aria-label="Alt bağlantılar">
+          <a href="#">Gizlilik</a>
+          <a href="#">Kullanım şartları</a>
+          <a href="#">Sorumlu oyun</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="main.js" defer></script>
+  </body>
+</html>
