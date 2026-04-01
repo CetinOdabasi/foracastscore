@@ -1,14 +1,29 @@
 (function () {
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("site-nav");
-  if (toggle && nav) {
-    function setOpen(open) {
+  var backdrop = document.getElementById("nav-backdrop");
+
+  function setOpen(open) {
+    if (toggle && nav) {
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
       toggle.setAttribute("aria-label", open ? "Menüyü kapat" : "Menüyü aç");
       nav.classList.toggle("is-open", open);
-      document.body.style.overflow = open ? "hidden" : "";
     }
+    if (backdrop) {
+      if (open) {
+        backdrop.removeAttribute("hidden");
+        backdrop.setAttribute("aria-hidden", "false");
+        backdrop.classList.add("is-visible");
+      } else {
+        backdrop.setAttribute("hidden", "");
+        backdrop.setAttribute("aria-hidden", "true");
+        backdrop.classList.remove("is-visible");
+      }
+    }
+    document.body.style.overflow = open ? "hidden" : "";
+  }
 
+  if (toggle && nav) {
     toggle.addEventListener("click", function () {
       setOpen(!nav.classList.contains("is-open"));
     });
@@ -17,6 +32,19 @@
       link.addEventListener("click", function () {
         setOpen(false);
       });
+    });
+
+    if (backdrop) {
+      backdrop.addEventListener("click", function () {
+        setOpen(false);
+      });
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && nav.classList.contains("is-open")) {
+        setOpen(false);
+        toggle.focus();
+      }
     });
 
     window.addEventListener("resize", function () {
@@ -63,6 +91,13 @@
       .trim();
   }
 
+  function syncChipPressed() {
+    chips.forEach(function (b) {
+      var on = b.classList.contains("is-active");
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
   function applyFilters() {
     var q = normalize(search.value);
     var visible = 0;
@@ -93,7 +128,10 @@
       });
       btn.classList.add("is-active");
       activeLeague = btn.getAttribute("data-filter") || "all";
+      syncChipPressed();
       applyFilters();
     });
   });
+
+  syncChipPressed();
 })();

@@ -2,7 +2,8 @@
 <html lang="tr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#070a0f" />
     <title>MaçAI — Yapay Zekâ Maç Tahminleri ve Canlı Skorlar</title>
     <meta
       name="description"
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">İçeriğe atla</a>
     <div class="bg-glow" aria-hidden="true"></div>
     <header class="site-header">
       <div class="container header-inner">
@@ -42,8 +44,14 @@
         </nav>
       </div>
     </header>
+    <div
+      class="nav-backdrop"
+      id="nav-backdrop"
+      hidden
+      aria-hidden="true"
+    ></div>
 
-    <main>
+    <main id="main-content" tabindex="-1">
       <section class="hero">
         <div class="container hero-grid">
           <div class="hero-copy">
@@ -124,7 +132,16 @@
               <span class="badge-live">demo veri</span>
             </p>
           </header>
-          <div class="live-scroller" role="region" aria-label="Canlı skorlar">
+          <p class="live-scroll-hint" id="live-hint">
+            Yatay kaydırın — tüm maçları görmek için parmağınızı veya fare tekerleğini kullanın.
+          </p>
+          <div
+            class="live-scroller"
+            role="region"
+            aria-label="Canlı skorlar"
+            aria-describedby="live-hint"
+            tabindex="0"
+          >
             <article class="live-card live">
               <p class="live-league">Premier League</p>
               <p class="live-teams">Arsenal — Chelsea</p>
@@ -178,17 +195,35 @@
                 class="search-input"
                 placeholder="Takım, lig ara… (ör. Galatasaray, Premier)"
                 autocomplete="off"
+                aria-describedby="search-hint"
               />
             </label>
-            <div class="filter-chips" role="group" aria-label="Lig filtresi">
-              <button type="button" class="chip-btn is-active" data-filter="all">Tümü</button>
-              <button type="button" class="chip-btn" data-filter="Süper Lig">Süper Lig</button>
-              <button type="button" class="chip-btn" data-filter="Premier League">Premier</button>
-              <button type="button" class="chip-btn" data-filter="La Liga">La Liga</button>
-              <button type="button" class="chip-btn" data-filter="Champions League">UCL</button>
+            <p id="search-hint" class="input-hint">
+              Yazdıkça liste süzülür; lig chip’leri ile birlikte kullanılabilir.
+            </p>
+            <div
+              class="filter-chips"
+              role="group"
+              aria-label="Lig filtresi"
+            >
+              <button type="button" class="chip-btn is-active" data-filter="all" aria-pressed="true">
+                Tümü
+              </button>
+              <button type="button" class="chip-btn" data-filter="Süper Lig" aria-pressed="false">
+                Süper Lig
+              </button>
+              <button type="button" class="chip-btn" data-filter="Premier League" aria-pressed="false">
+                Premier
+              </button>
+              <button type="button" class="chip-btn" data-filter="La Liga" aria-pressed="false">
+                La Liga
+              </button>
+              <button type="button" class="chip-btn" data-filter="Champions League" aria-pressed="false">
+                UCL
+              </button>
             </div>
           </div>
-          <p class="filter-empty hidden" id="filter-empty" role="status">
+          <p class="filter-empty hidden" id="filter-empty" role="status" aria-live="polite">
             Eşleşen maç yok. Farklı bir arama veya lig deneyin.
           </p>
           <div class="prediction-grid" id="prediction-grid">
@@ -367,8 +402,11 @@
               <span class="league-tag">Örnek maç</span>
               <h3>Galatasaray — Fenerbahçe</h3>
             </div>
-            <div class="compare-table-wrap">
+            <div class="compare-table-wrap" role="region" aria-label="Model karşılaştırma tablosu">
               <table class="compare-table">
+                <caption class="sr-only">
+                  Galatasaray — Fenerbahçe maçı için üç yapay zekâ modelinin 1, X ve 2 olasılıkları
+                </caption>
                 <thead>
                   <tr>
                     <th scope="col">Model</th>
