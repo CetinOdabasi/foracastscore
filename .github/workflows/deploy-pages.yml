@@ -1,3 +1,12 @@
+# Static site → GitHub Pages (GitHub Actions).
+#
+# İlk kurulum (bir kez, repo ayarlarında):
+#   Settings → Pages → Build and deployment → Source: "GitHub Actions" seçin ve Save.
+#   (Kaynak "Deploy from a branch" ise bu workflow configure-pages adımında 404 verir.)
+#
+# enablement: true kullanmak için PAT gerekir; çoğu projede yukarıdaki tek tık yeterlidir.
+# https://github.com/actions/configure-pages
+#
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
